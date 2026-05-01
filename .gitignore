@@ -1,13 +1,15 @@
 # Python
 venv/
 __pycache__/
-*.pyc
+*.py[cod]
+*.pyo
 
 # Django
-backend/db.sqlite3
+*.sqlite3
 
 # Environment variables
 .env
+.env.*
 
 # Node / React
 frontend/node_modules/
@@ -15,3 +17,6 @@ frontend/dist/
 
 # OS
 .DS_Store
+
+# Editor
+.vscode/
