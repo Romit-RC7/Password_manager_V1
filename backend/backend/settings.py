@@ -64,13 +64,24 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'backend.wsgi.application'
 
+if DEBUG:
+# 🗄️ DATABASE (LOCAL SQLITE)
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
+
+else:
 # 🗄️ DATABASE (Render PostgreSQL ready)
-DATABASES = {
-    'default': dj_database_url.config(
-        default=os.getenv("DATABASE_URL"),
-        conn_max_age=600,
-    )
-}
+    DATABASES = {
+        'default': dj_database_url.config(
+            default=os.getenv("DATABASE_URL"),
+            conn_max_age=600,
+        )
+    }
+
 
 # 🔑 PASSWORD VALIDATION
 AUTH_PASSWORD_VALIDATORS = [
@@ -89,6 +100,7 @@ USE_TZ = True
 # 📁 STATIC FILES
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage' # For production static files handling
 
 # 👤 CUSTOM USER
 AUTH_USER_MODEL = 'accounts.User'
@@ -116,7 +128,21 @@ AUTHENTICATION_BACKENDS = [
 ]
 
 # 🌐 CORS
-CORS_ALLOWED_ORIGINS = os.getenv("CORS_ALLOWED_ORIGINS", "").split(",")
+if DEBUG:
+    CORS_ALLOW_ALL_ORIGINS = True
+
+else:
+    CORS_ALLOWED_ORIGINS = os.getenv(
+        "CORS_ALLOWED_ORIGINS",
+        ""
+    ).split(",")
+
+# 🔒 CSRF TRUSTED ORIGINS
+CSRF_TRUSTED_ORIGINS = [
+    "https://*.onrender.com",
+    "https://*.vercel.app",
+]
+
 
 # 🔒 SECURITY HEADERS
 SECURE_BROWSER_XSS_FILTER = True

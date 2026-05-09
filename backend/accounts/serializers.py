@@ -1,34 +1,63 @@
 from rest_framework import serializers
+from django.contrib.auth.hashers import make_password
+
 from .models import User
 
+
 class RegisterSerializer(serializers.ModelSerializer):
+
     class Meta:
         model = User
         fields = ['email', 'password']
-        extra_kwargs = {'password': {'write_only': True}}
+
+        extra_kwargs = {
+            'password': {'write_only': True}
+        }
+
+    def validate_email(self, value):
+
+        if User.objects.filter(email=value).exists():
+
+            raise serializers.ValidationError(
+                "User already registered with this email"
+            )
+
+        return value
+
+    def validate_password(self, value):
+
+        if not value:
+            raise serializers.ValidationError(
+                "Password required"
+            )
+
+        if len(value) < 6:
+            raise serializers.ValidationError(
+                "Password must be at least 6 characters"
+            )
+
+        return value
 
     def create(self, validated_data):
-        if not validated_data.get("password"):
-            raise serializers.ValidationError("Password required")
 
-        return User.objects.create_user(
+        user = User.objects.create_user(
             email=validated_data['email'],
             password=validated_data['password']
         )
-    
-# def create(self, validated_data):
-#     return User.objects.create_user(**validated_data)
 
-# # Uses create_user() instead of create() to ensure password is hashed using set_password()
-# # validated_data is unpacked into arguments (email=..., password=...)
-# # If we used User.objects.create(), password would be stored in plain text (INSECURE)    
+        return user
 
-from django.contrib.auth.hashers import make_password
-# Serializer for updating master password, uses make_password to hash the password before saving to database
+
 class MasterPasswordSerializer(serializers.Serializer):
+
     master_password = serializers.CharField(write_only=True)
 
     def update(self, instance, validated_data):
-        instance.master_password = make_password(validated_data['master_password'])
+
+        instance.master_password = make_password(
+            validated_data['master_password']
+        )
+
         instance.save()
+
         return instance
