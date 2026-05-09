@@ -134,12 +134,11 @@ if DEBUG:
 
 else:
     CORS_ALLOWED_ORIGINS = [
-        "https://example.com"
+    "https://password-manager-v1-three.vercel.app",
     ]
 # 🔒 CSRF TRUSTED ORIGINS
 CSRF_TRUSTED_ORIGINS = [
-    "https://*.onrender.com",
-    "https://*.vercel.app",
+    "https://password-manager-v1-three.vercel.app",
 ]
 
 
