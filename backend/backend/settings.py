@@ -128,15 +128,14 @@ AUTHENTICATION_BACKENDS = [
 ]
 
 # 🌐 CORS
+# 🌐 CORS
 if DEBUG:
     CORS_ALLOW_ALL_ORIGINS = True
 
 else:
-    CORS_ALLOWED_ORIGINS = os.getenv(
-        "CORS_ALLOWED_ORIGINS",
-        ""
-    ).split(",")
-
+    CORS_ALLOWED_ORIGINS = [
+        "https://example.com"
+    ]
 # 🔒 CSRF TRUSTED ORIGINS
 CSRF_TRUSTED_ORIGINS = [
     "https://*.onrender.com",
