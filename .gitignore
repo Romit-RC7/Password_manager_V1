@@ -20,3 +20,5 @@ frontend/dist/
 
 # Editor
 .vscode/
+
+staticfiles/

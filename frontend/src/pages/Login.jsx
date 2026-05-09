@@ -32,36 +32,48 @@ function Login() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-900 text-white">
-      <div className="bg-gray-800 p-6 rounded-xl w-80 shadow">
-        <h2 className="text-xl font-bold mb-4 text-center">Login</h2>
+    <div className="min-h-screen bg-zinc-950 flex items-center justify-center px-4 text-white">
+      <div className="w-full max-w-md bg-zinc-900 border border-zinc-800 rounded-3xl p-8 shadow-2xl shadow-black/40">
 
-        <input
-          className="w-full p-2 mb-3 rounded bg-gray-700"
-          placeholder="Email"
-          onChange={(e) => setEmail(e.target.value)}
-        />
+        <div className="mb-8 text-center">
+          <h1 className="text-3xl font-bold mb-2">
+            Welcome Back
+          </h1>
 
-        <input
-          className="w-full p-2 mb-3 rounded bg-gray-700"
-          type="password"
-          placeholder="Password"
-          onChange={(e) => setPassword(e.target.value)}
-        />
+          <p className="text-zinc-400 text-sm">
+            Access your secure password vault
+          </p>
+        </div>
 
-        <button
-          onClick={handleLogin}
-          className="w-full bg-blue-600 p-2 rounded"
-        >
-          Login
-        </button>
+        <div className="space-y-4">
+          <input
+            className="w-full p-3 bg-zinc-800 border border-zinc-700 rounded-xl outline-none focus:border-white transition"
+            placeholder="Email"
+            onChange={(e) => setEmail(e.target.value)}
+          />
 
-        <p
-          className="text-sm mt-3 text-center cursor-pointer"
-          onClick={() => navigate("/register")}
-        >
-          Create account
-        </p>
+          <input
+            className="w-full p-3 bg-zinc-800 border border-zinc-700 rounded-xl outline-none focus:border-white transition"
+            type="password"
+            placeholder="Password"
+            onChange={(e) => setPassword(e.target.value)}
+          />
+
+          <button
+            onClick={handleLogin}
+            className="w-full bg-white text-black font-semibold p-3 rounded-xl hover:bg-zinc-200 transition-all duration-200"
+          >
+            Login
+          </button>
+
+          <p
+            className="text-sm text-center text-zinc-400 hover:text-white cursor-pointer transition"
+            onClick={() => navigate("/register")}
+          >
+            Create account
+          </p>
+        </div>
+
       </div>
     </div>
   );

@@ -11,11 +11,9 @@ function UnlockVault() {
         master_password: master,
       });
 
-      // 🔐 Store only in session (NOT localStorage)
       sessionStorage.setItem("isUnlocked", "true");
       sessionStorage.setItem("master", master);
 
-      // redirect to dashboard
       window.location.href = "/dashboard";
 
     } catch (err) {
@@ -25,35 +23,39 @@ function UnlockVault() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-900 text-white">
-      <div className="bg-gray-800 p-6 rounded-xl w-80 shadow">
+    <div className="min-h-screen bg-zinc-950 flex items-center justify-center px-4 text-white">
 
-        <h2 className="text-xl font-bold mb-4 text-center">
-          Unlock Vault 🔐
-        </h2>
+      <div className="w-full max-w-md bg-zinc-900 border border-zinc-800 rounded-3xl p-8 shadow-2xl shadow-black/40">
 
-        {/* PASSWORD INPUT */}
+        <div className="text-center mb-8">
+          <h1 className="text-3xl font-bold mb-2">
+            Unlock Vault 🔐
+          </h1>
+
+          <p className="text-zinc-400 text-sm">
+            Enter your master password to continue
+          </p>
+        </div>
+
         <input
           type={show ? "text" : "password"}
-          className="w-full p-2 mb-3 rounded bg-gray-700"
-          placeholder="Enter master password"
+          className="w-full p-3 bg-zinc-800 border border-zinc-700 rounded-xl outline-none focus:border-white transition"
+          placeholder="Master Password"
           onChange={(e) => setMaster(e.target.value)}
         />
 
-        {/* SHOW / HIDE BUTTON */}
         <button
           onClick={() => setShow(!show)}
-          className="text-sm mb-3 text-gray-300"
+          className="text-sm text-zinc-400 hover:text-white mt-3 transition"
         >
           {show ? "Hide Password" : "Show Password"}
         </button>
 
-        {/* UNLOCK BUTTON */}
         <button
           onClick={unlock}
-          className="w-full bg-purple-600 p-2 rounded hover:bg-purple-700 transition"
+          className="w-full mt-5 bg-white text-black font-semibold p-3 rounded-xl hover:bg-zinc-200 transition-all duration-200"
         >
-          Unlock
+          Unlock Vault
         </button>
 
       </div>
